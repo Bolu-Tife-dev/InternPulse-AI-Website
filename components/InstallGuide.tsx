@@ -50,7 +50,7 @@ const osTabs: {
 ];
 
 const cliCommand = `git clone ${siteConfig.repoUrl}.git
-cd InternPulse-AI
+cd InternPulse-AI-Website
 npm install
 cp .env.example .env   # add your free API keys
 npm run dev`;

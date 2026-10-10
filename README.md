@@ -52,10 +52,10 @@ lib/
 All site-wide links live in **`lib/site.ts`**:
 
 ```ts
-repoUrl: "https://github.com/Bolu-Tife-dev/InternPulse-AI",
-releasesUrl: "https://github.com/Bolu-Tife-dev/InternPulse-AI/releases/latest",
-docsUrl: "https://github.com/Bolu-Tife-dev/InternPulse-AI#readme",
-issuesUrl: "https://github.com/Bolu-Tife-dev/InternPulse-AI/issues",
+repoUrl: "https://github.com/Bolu-Tife-dev/InternPulse-AI-Website",
+releasesUrl: "https://github.com/Bolu-Tife-dev/InternPulse-AI-Website/releases/latest",
+docsUrl: "https://github.com/Bolu-Tife-dev/InternPulse-AI-Website#readme",
+issuesUrl: "https://github.com/Bolu-Tife-dev/InternPulse-AI-Website/issues",
 contactEmail: "dev@internpulse.ai",
 ```
 
