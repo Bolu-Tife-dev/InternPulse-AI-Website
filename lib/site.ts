@@ -35,8 +35,8 @@ export type ReleasePlatform = {
 
 /** Current published build — kept in sync with the GitHub release assets. */
 export const currentRelease = {
-  version: "1.0.2",
-  tag: "v1.0.2",
+  version: "1.0.3",
+  tag: "v1.0.3",
   releasedAt: "2026-10-10",
   windows: {
     note: "NSIS installer. SmartScreen may prompt on first run — choose “More info → Run anyway”.",
@@ -44,10 +44,10 @@ export const currentRelease = {
     downloads: [
       {
         label: "64-bit installer",
-        asset: "internpulse-ai-1.0.2-win-x64-setup.exe",
-        url: "https://github.com/Bolu-Tife-dev/InternPulse-AI/releases/download/v1.0.2/internpulse-ai-1.0.2-win-x64-setup.exe",
+        asset: "internpulse-ai-1.0.3-win-x64-setup.exe",
+        url: "https://github.com/Bolu-Tife-dev/InternPulse-AI/releases/download/v1.0.3/internpulse-ai-1.0.3-win-x64-setup.exe",
         size: "108.7 MB",
-        sha256: "5a60fecef74a16bf440801ef7eb27b16df71f0b23ca5dd7d1f77cc4e15bdfe31",
+        sha256: "4db8a9315f885410719f8c04a62dde23f49a1cfaeca3bffdb167952d321bf742",
       },
     ],
   },
@@ -57,17 +57,17 @@ export const currentRelease = {
     downloads: [
       {
         label: "Apple Silicon (M1–M4)",
-        asset: "internpulse-ai-1.0.2-mac-arm64.dmg",
-        url: "https://github.com/Bolu-Tife-dev/InternPulse-AI/releases/download/v1.0.2/internpulse-ai-1.0.2-mac-arm64.dmg",
+        asset: "internpulse-ai-1.0.3-mac-arm64.dmg",
+        url: "https://github.com/Bolu-Tife-dev/InternPulse-AI/releases/download/v1.0.3/internpulse-ai-1.0.3-mac-arm64.dmg",
         size: "138.2 MB",
-        sha256: "9579d8c914d6df84070759ad7904fd12cdc24e98649adbd5f218c398f6a27284",
+        sha256: "1a5c6aeb40ce1da06299487bf3ada7c0f5eddcc794125be311f02edf835332f9",
       },
       {
         label: "Intel",
-        asset: "internpulse-ai-1.0.2-mac-x64.dmg",
-        url: "https://github.com/Bolu-Tife-dev/InternPulse-AI/releases/download/v1.0.2/internpulse-ai-1.0.2-mac-x64.dmg",
+        asset: "internpulse-ai-1.0.3-mac-x64.dmg",
+        url: "https://github.com/Bolu-Tife-dev/InternPulse-AI/releases/download/v1.0.3/internpulse-ai-1.0.3-mac-x64.dmg",
         size: "142.6 MB",
-        sha256: "29109d6e5c7e1e2a47656a9ef27f728984a598d0acf56a1eec097ccbc0718fca",
+        sha256: "fc2f222b3f6810503290d9cbd8a199e7417df5061467c6e2210e02e6a3cfbab8",
       },
     ],
   },
@@ -77,17 +77,17 @@ export const currentRelease = {
     downloads: [
       {
         label: "AppImage (any distro)",
-        asset: "internpulse-ai-1.0.2-linux-x86_64.AppImage",
-        url: "https://github.com/Bolu-Tife-dev/InternPulse-AI/releases/download/v1.0.2/internpulse-ai-1.0.2-linux-x86_64.AppImage",
+        asset: "internpulse-ai-1.0.3-linux-x86_64.AppImage",
+        url: "https://github.com/Bolu-Tife-dev/InternPulse-AI/releases/download/v1.0.3/internpulse-ai-1.0.3-linux-x86_64.AppImage",
         size: "145.4 MB",
-        sha256: "1ab83695ab485e87f94e89c5e4a70030b5a476cd0e228f87cbd2d3ffacfcd0d2",
+        sha256: "bb6d670b32675a5395818e8e0ec5818c2cccd8a3d8c362a03b24935a919fca58",
       },
       {
         label: "deb (Debian/Ubuntu)",
-        asset: "internpulse-ai-1.0.2-linux-amd64.deb",
-        url: "https://github.com/Bolu-Tife-dev/InternPulse-AI/releases/download/v1.0.2/internpulse-ai-1.0.2-linux-amd64.deb",
+        asset: "internpulse-ai-1.0.3-linux-amd64.deb",
+        url: "https://github.com/Bolu-Tife-dev/InternPulse-AI/releases/download/v1.0.3/internpulse-ai-1.0.3-linux-amd64.deb",
         size: "109.2 MB",
-        sha256: "ad3a49f91f1b841284aa8dccaae865e139ebcd6c1b97d0aeb2def0949951b2c5",
+        sha256: "36f5aa7f92a21894383a508b82b15b065f07ad08d6b1f03f82e5c6847cc0bafb",
       },
     ],
   },
