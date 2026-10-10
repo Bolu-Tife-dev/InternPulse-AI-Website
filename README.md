@@ -49,17 +49,17 @@ lib/
 
 ## Configure Before Deploying
 
-Edit **`lib/site.ts`** and replace the placeholder URLs:
+All site-wide links live in **`lib/site.ts`**:
 
 ```ts
-repoUrl: "https://github.com/your-org/InternPulse-AI",
-releasesUrl: "https://github.com/your-org/InternPulse-AI/releases/latest",
-docsUrl: "https://github.com/your-org/InternPulse-AI#readme",
-issuesUrl: "https://github.com/your-org/InternPulse-AI/issues",
-contactEmail: "you@example.com",
+repoUrl: "https://github.com/Bolu-Tife-dev/InternPulse-AI",
+releasesUrl: "https://github.com/Bolu-Tife-dev/InternPulse-AI/releases/latest",
+docsUrl: "https://github.com/Bolu-Tife-dev/InternPulse-AI#readme",
+issuesUrl: "https://github.com/Bolu-Tife-dev/InternPulse-AI/issues",
+contactEmail: "dev@internpulse.ai",
 ```
 
-Also update `metadataBase` / OpenGraph URLs in `app/layout.tsx` to your production domain.
+Update `metadataBase` / OpenGraph URLs in `app/layout.tsx` to your production domain after deploying.
 
 ## Deploy on Vercel
 

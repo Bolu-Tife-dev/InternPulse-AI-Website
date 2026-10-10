@@ -16,7 +16,7 @@ const mono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://internpulse-ai.vercel.app"),
+  metadataBase: new URL("https://internpulse-ai.vercel.app"), // update to your Vercel domain
   title: {
     default: `${siteConfig.name} — Land Remote Software Internships Worldwide`,
     template: `%s · ${siteConfig.name}`,

@@ -6,11 +6,11 @@ export const siteConfig = {
     "Automated Global Remote Internship Matcher & Application Engine for Developers.",
   description:
     "An open-source desktop app that scans global job platforms for remote software and frontend engineering internships accepting Nigerian and international candidates, auto-applies with tailored resumes, and tracks every response through Outlook email integration.",
-  // ── Replace these with your own repository links before deploying ──────────
-  repoUrl: "https://github.com/internpulse-ai/internpulse-ai",
-  releasesUrl: "https://github.com/internpulse-ai/internpulse-ai/releases/latest",
-  docsUrl: "https://github.com/internpulse-ai/internpulse-ai#readme",
-  issuesUrl: "https://github.com/internpulse-ai/internpulse-ai/issues",
+  // ── Repository links ──────────────────────────────────────────────────────
+  repoUrl: "https://github.com/Bolu-Tife-dev/InternPulse-AI",
+  releasesUrl: "https://github.com/Bolu-Tife-dev/InternPulse-AI/releases/latest",
+  docsUrl: "https://github.com/Bolu-Tife-dev/InternPulse-AI#readme",
+  issuesUrl: "https://github.com/Bolu-Tife-dev/InternPulse-AI/issues",
   contactEmail: "dev@internpulse.ai",
   license: "MIT",
 } as const;
