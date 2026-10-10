@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
 import { ArrowUpRight, Menu, X, Zap } from "lucide-react";
-import { navItems, siteConfig } from "@/lib/site";
+import { navItems, siteConfig, currentRelease } from "@/lib/site";
 import { ButtonLink } from "@/components/ui/Button";
 import { cn } from "@/lib/utils";
 
@@ -79,10 +79,7 @@ export function Navbar() {
             <ArrowUpRight className="h-3.5 w-3.5" />
           </ButtonLink>
           <ButtonLink
-            href={siteConfig.releasesUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            variant="primary"
+            href={currentRelease.windows.url}
             size="sm"
           >
             Download
@@ -122,10 +119,7 @@ export function Navbar() {
               ))}
               <div className="mt-3 flex flex-col gap-2">
                 <ButtonLink
-                  href={siteConfig.releasesUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  variant="primary"
+                  href={currentRelease.windows.url}
                   size="md"
                 >
                   Download Desktop App

@@ -2,7 +2,7 @@
 
 import { ArrowRight, Github, ShieldCheck, Terminal, Users } from "lucide-react";
 import { motion } from "framer-motion";
-import { siteConfig, platforms } from "@/lib/site";
+import { siteConfig, platforms, currentRelease } from "@/lib/site";
 import { ButtonLink } from "@/components/ui/Button";
 import { HeroMock } from "@/components/HeroMock";
 
@@ -69,9 +69,7 @@ export function Hero() {
               className="mt-9 flex flex-col gap-3 sm:flex-row sm:items-center"
             >
               <ButtonLink
-                href={siteConfig.releasesUrl}
-                target="_blank"
-                rel="noopener noreferrer"
+                href={currentRelease.windows.url}
                 size="lg"
                 className="w-full sm:w-auto"
               >
