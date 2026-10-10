@@ -13,7 +13,7 @@ import {
   Cpu,
   ShieldCheck,
 } from "lucide-react";
-import { siteConfig, currentRelease } from "@/lib/site";
+import { siteConfig, currentRelease, type ReleasePlatform } from "@/lib/site";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { ButtonLink } from "@/components/ui/Button";
 import { CodeBlock } from "@/components/ui/CodeBlock";
@@ -22,38 +22,10 @@ import { cn } from "@/lib/utils";
 
 type OsKey = "windows" | "macos" | "linux";
 
-const osTabs: {
-  key: OsKey;
-  label: string;
-  icon: typeof Apple;
-  artifact: string;
-  note: string;
-  available: boolean;
-}[] = [
-  {
-    key: "windows",
-    label: "Windows",
-    icon: Cpu,
-    artifact: currentRelease.windows.asset,
-    note: `${currentRelease.windows.requirements}. SmartScreen may prompt on first run — choose “More info → Run anyway”.`,
-    available: true,
-  },
-  {
-    key: "macos",
-    label: "macOS",
-    icon: Apple,
-    artifact: "InternPulse-1.0.0.dmg (build from source)",
-    note: "macOS 12 Monterey or later (Apple Silicon & Intel). Build with npm run dist:mac, then right-click → Open on first launch.",
-    available: false,
-  },
-  {
-    key: "linux",
-    label: "Linux",
-    icon: TerminalSquare,
-    artifact: "InternPulse-1.0.0.AppImage (build from source)",
-    note: "Any modern distro. Build with npm run dist:linux, then chmod +x before running.",
-    available: false,
-  },
+const osTabs: { key: OsKey; label: string; icon: typeof Apple; platform: ReleasePlatform }[] = [
+  { key: "windows", label: "Windows", icon: Cpu, platform: currentRelease.windows },
+  { key: "macos", label: "macOS", icon: Apple, platform: currentRelease.macos },
+  { key: "linux", label: "Linux", icon: TerminalSquare, platform: currentRelease.linux },
 ];
 
 const cliCommand = `git clone ${siteConfig.repoUrl}.git
@@ -63,16 +35,12 @@ npm run playwright:install
 cp .env.example .env   # add your free API keys
 npm run dev`;
 
-const linuxCommands = `npm install
-npm run playwright:install
-npm run dist:linux
-chmod +x release/*.AppImage
-./release/*.AppImage`;
+const linuxCommands = `chmod +x internpulse-ai-${currentRelease.version}-linux-x86_64.AppImage
+./internpulse-ai-${currentRelease.version}-linux-x86_64.AppImage`;
 
-const macCommands = `npm install
-npm run playwright:install
-npm run dist:mac
-open release/*.dmg`;
+const macCommands = `hdiutil attach internpulse-ai-${currentRelease.version}-mac-arm64.dmg
+cp -R "InternPulse AI.app" /Applications/
+hdiutil detach /Volumes/"InternPulse AI"`;
 
 function CopyButton({ value, label }: { value: string; label: string }) {
   const [copied, setCopied] = useState(false);
@@ -97,7 +65,7 @@ function CopyButton({ value, label }: { value: string; label: string }) {
 export function InstallGuide() {
   const [active, setActive] = useState<OsKey>("windows");
   const current = osTabs.find((t) => t.key === active) ?? osTabs[0];
-  const isWindows = current.key === "windows";
+  const [primary, ...alternates] = current.platform.downloads;
 
   return (
     <section id="install" className="relative py-24 sm:py-32">
@@ -113,7 +81,7 @@ export function InstallGuide() {
               Download once, <span className="text-gradient">apply forever</span>
             </>
           }
-          description="Grab the prebuilt Windows installer, or clone the repository and build for macOS / Linux in a handful of commands."
+          description="Prebuilt installers for Windows, macOS and Linux — or clone the repository and build from source."
         />
 
         <Reveal className="mx-auto mt-14 max-w-4xl">
@@ -163,85 +131,92 @@ export function InstallGuide() {
                 <div className="flex flex-col gap-5 sm:flex-row sm:items-start sm:justify-between">
                   <div className="min-w-0">
                     <p className="font-mono text-[11px] uppercase tracking-wider text-zinc-500">
-                      {current.available ? "Latest release artifact" : "Not published yet"}
+                      v{currentRelease.version} · {primary.size}
                     </p>
                     <p className="mt-1 break-all font-mono text-[13px] text-emerald-300">
-                      {current.artifact}
+                      {primary.asset}
                     </p>
                     <p className="mt-2 max-w-md text-[13px] leading-relaxed text-zinc-500">
-                      {current.note}
+                      {current.platform.note}
+                    </p>
+                    <p className="mt-1 max-w-md text-[13px] leading-relaxed text-zinc-600">
+                      {current.platform.requirements}
                     </p>
 
-                    {isWindows && (
-                      <dl className="mt-4 space-y-2 rounded-lg border border-white/10 bg-black/25 p-3 text-[12px]">
-                        <div className="flex items-center justify-between gap-3">
-                          <dt className="text-zinc-500">Version</dt>
-                          <dd className="font-mono text-zinc-300">
-                            {currentRelease.version}
-                          </dd>
-                        </div>
-                        <div className="flex items-center justify-between gap-3">
-                          <dt className="text-zinc-500">Installer size</dt>
-                          <dd className="font-mono text-zinc-300">
-                            {currentRelease.windows.size}
-                          </dd>
-                        </div>
-                        <div className="flex items-start justify-between gap-3">
-                          <dt className="shrink-0 text-zinc-500">SHA-256</dt>
-                          <dd className="flex min-w-0 items-center gap-2">
-                            <code className="block max-w-[16rem] truncate font-mono text-[11px] text-zinc-400">
-                              {currentRelease.windows.sha256}
-                            </code>
-                            <CopyButton
-                              value={currentRelease.windows.sha256}
-                              label="Copy SHA-256 checksum"
-                            />
-                          </dd>
-                        </div>
-                      </dl>
+                    <dl className="mt-4 space-y-2 rounded-lg border border-white/10 bg-black/25 p-3 text-[12px]">
+                      <div className="flex items-center justify-between gap-3">
+                        <dt className="text-zinc-500">SHA-256</dt>
+                        <dd className="flex min-w-0 items-center gap-2">
+                          <code className="block max-w-[14rem] truncate font-mono text-[11px] text-zinc-400">
+                            {primary.sha256}
+                          </code>
+                          <CopyButton
+                            value={primary.sha256}
+                            label="Copy SHA-256 checksum"
+                          />
+                        </dd>
+                      </div>
+                    </dl>
+
+                    {alternates.length > 0 && (
+                      <ul className="mt-3 space-y-1.5">
+                        {alternates.map((alt) => (
+                          <li key={alt.asset} className="flex flex-wrap items-center gap-2 text-[12px]">
+                            <a
+                              href={alt.url}
+                              className="font-mono text-zinc-400 underline decoration-white/20 underline-offset-2 transition hover:text-emerald-300"
+                            >
+                              {alt.label}
+                            </a>
+                            <span className="text-zinc-600">
+                              {alt.asset} · {alt.size}
+                            </span>
+                            <CopyButton value={alt.sha256} label={`Copy ${alt.label} checksum`} />
+                          </li>
+                        ))}
+                      </ul>
                     )}
                   </div>
 
-                  {isWindows ? (
-                    <ButtonLink
-                      href={currentRelease.windows.url}
-                      size="lg"
-                      className="shrink-0"
-                    >
-                      <Download className="h-4 w-4" />
-                      Download for Windows
-                    </ButtonLink>
-                  ) : (
-                    <ButtonLink
-                      href={siteConfig.repoUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      variant="secondary"
-                      size="lg"
-                      className="shrink-0"
-                    >
-                      <Github className="h-4 w-4" />
-                      Build from source
-                    </ButtonLink>
-                  )}
+                  <ButtonLink href={primary.url} size="lg" className="shrink-0">
+                    <Download className="h-4 w-4" />
+                    Download for {current.label}
+                  </ButtonLink>
                 </div>
 
                 {current.key === "linux" && (
                   <CodeBlock code={linuxCommands} filename="terminal" className="mt-6" />
                 )}
                 {current.key === "macos" && (
-                  <CodeBlock code={macCommands} filename="terminal" className="mt-6" />
+                  <CodeBlock code={macCommands} filename="terminal (optional drag-and-drop works too)" className="mt-6" />
                 )}
-                {isWindows && (
-                  <div className="mt-6 flex items-start gap-2.5 rounded-lg border border-emerald-400/20 bg-emerald-500/[0.06] p-3 text-[12.5px] leading-relaxed text-emerald-100/80">
-                    <ShieldCheck className="mt-0.5 h-4 w-4 shrink-0 text-emerald-400" />
-                    <p>
-                      The installer is not code-signed yet, so Windows SmartScreen may warn on
-                      first run. Choose <strong>More info → Run anyway</strong>. You can verify the
-                      download with the SHA-256 above before installing.
-                    </p>
-                  </div>
-                )}
+
+                <div className="mt-6 flex items-start gap-2.5 rounded-lg border border-emerald-400/20 bg-emerald-500/[0.06] p-3 text-[12.5px] leading-relaxed text-emerald-100/80">
+                  <ShieldCheck className="mt-0.5 h-4 w-4 shrink-0 text-emerald-400" />
+                  <p>
+                    {current.key === "windows" && (
+                      <>
+                        The installer is not code-signed yet, so Windows SmartScreen may warn on
+                        first run. Choose <strong>More info → Run anyway</strong>. Verify the
+                        download with the SHA-256 above before installing.
+                      </>
+                    )}
+                    {current.key === "macos" && (
+                      <>
+                        The DMG is not notarized yet, so Gatekeeper will block a double-click
+                        launch. Right-click the app → <strong>Open</strong> the first time, or run{" "}
+                        <code className="font-mono text-[11px]">xattr -cr /Applications/"InternPulse AI.app"</code>.
+                      </>
+                    )}
+                    {current.key === "linux" && (
+                      <>
+                        The AppImage is built on Ubuntu runners and runs on any modern 64-bit
+                        distro with FUSE. Verify the download with the SHA-256 above, then{" "}
+                        <code className="font-mono text-[11px]">chmod +x</code> before launching.
+                      </>
+                    )}
+                  </p>
+                </div>
               </motion.div>
             </AnimatePresence>
 
@@ -265,6 +240,16 @@ export function InstallGuide() {
               >
                 <Github className="h-4 w-4" />
                 Clone the app repository
+              </ButtonLink>
+              <ButtonLink
+                href={siteConfig.releasesUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                variant="ghost"
+                size="sm"
+              >
+                All releases
+                <ArrowUpRight className="h-3.5 w-3.5" />
               </ButtonLink>
               <ButtonLink
                 href={siteConfig.docsUrl}

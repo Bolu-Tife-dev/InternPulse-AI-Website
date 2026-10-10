@@ -79,7 +79,7 @@ export function Navbar() {
             <ArrowUpRight className="h-3.5 w-3.5" />
           </ButtonLink>
           <ButtonLink
-            href={currentRelease.windows.url}
+            href={currentRelease.windows.downloads[0].url}
             size="sm"
           >
             Download
@@ -119,7 +119,7 @@ export function Navbar() {
               ))}
               <div className="mt-3 flex flex-col gap-2">
                 <ButtonLink
-                  href={currentRelease.windows.url}
+                  href={currentRelease.windows.downloads[0].url}
                   size="md"
                 >
                   Download Desktop App

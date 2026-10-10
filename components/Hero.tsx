@@ -69,7 +69,7 @@ export function Hero() {
               className="mt-9 flex flex-col gap-3 sm:flex-row sm:items-center"
             >
               <ButtonLink
-                href={currentRelease.windows.url}
+                href={currentRelease.windows.downloads[0].url}
                 size="lg"
                 className="w-full sm:w-auto"
               >
